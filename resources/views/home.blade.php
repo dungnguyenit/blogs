@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="create-posts">
-                    <form method="POST" action="">
+                    <form method="POST" action="{{ route('create_posts') }}" >
                         @csrf
                         <div class="box">
                             <textarea name="title" id="" cols="30" rows="10" placeholder="Nhập bài viet"></textarea>
@@ -15,19 +15,23 @@
                                     <div class="box-image"></div>
                                     <div class="box-submit">
                                         <label for="file-upload">Tải lên tệp tin</label>
-                                        <input type="file" id="file-upload" onchange="previewImage(this)" />
-
+                                        <input type="file" id="file-upload" name="file" onchange="previewImage(this)" />
                                         <button type="submit" class="btn-posts">Submit</button>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </form>
                 </div>
-                <div class="show-posts">
-                    jụksdfiksdf
+                <?php $a = [1, 2, 3] ?>
+                @foreach($a as $b)
+                <div class="show-posts" key={{$b}}>
+                    <h5> Nguyễn Đình Dũng </h5>
+                    <span>13/04/2000</span><br>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam voluptates quam in odit numquam illo? Consectetur, perferendis! Atque esse iusto suscipit tenetur mollitia explicabo officia placeat veritatis. Minus, vel dignissimos?</p>
+                    <img src="" alt="hello">
                 </div>
+                @endforeach
             </div>
         </div>
     </div>

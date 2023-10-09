@@ -228,5 +228,13 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
+    'constants' => [
+        'media_types' => [
+            'image' => 'Image',
+            'video' => 'Video',
+            'audio' => 'Audio',
+            // Thêm các kiểu media khác tùy vào yêu cầu của bạn
+        ],
+    ],
 
 ];

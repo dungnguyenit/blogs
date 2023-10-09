@@ -67,3 +67,10 @@
     border: none;
     border-radius: 8px;
 }
+
+.show-posts {
+    border-bottom: 1px solid blue;
+    border-radius: 8px;
+    padding: 5px;
+    margin-bottom: 20px;
+}
