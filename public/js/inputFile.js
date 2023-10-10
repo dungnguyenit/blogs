@@ -33,3 +33,7 @@ function deleteImage() {
     fileUpload.value = ''; // Xóa giá trị file đã chọn
     boxImage.style.display = 'none'; // Ẩn boxImage khi xóa ảnh
 }
+
+// ------------------
+var menu = document.querySelector(".menu"); // Using a class instead, see note below.
+menu.classList.toggle("hidden-phone");

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PersonalPageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,10 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@getPosts')->name('home');
+Route::post('/home/{id}', 'PostController@deletePosts')->name('delete');
 Route::post('/create_post', 'PostController@store')->name('create_posts');
 Route::get('/personal_page', function () {
     return view('personalPage');
 })->name('personal_page');
+Route::get('/personal_page', 'PersonalController@index')->name('personal_page');

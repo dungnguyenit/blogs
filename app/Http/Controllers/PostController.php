@@ -7,6 +7,9 @@ use App\Post;
 use App\PostMedia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class PostController extends Controller
 {
@@ -24,5 +27,17 @@ class PostController extends Controller
         $postMedia->post_id = $post->id;
         $postMedia->save();
         return redirect()->route('home');
+    }
+
+    public function deletePosts($id)
+    {
+        $user_id = DB::table('posts')->where('id', $id)->value('user_id');
+        if ($user_id == Auth::id()) {
+            PostMedia::destroy($id);
+            Post::destroy($id);
+            return redirect()->back()->with('success', 'Bản ghi đã được xóa thành công.');
+        } else {
+            return redirect()->back()->with('error', 'Bạn không có quyền xóa bản ghi này.');
+        }
     }
 }

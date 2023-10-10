@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="{{asset('css/styles.css')}}">
 <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <!-- bootstrap -->
-<link rel="stylesheet" href="{{ asset('path_to_node_modules/bootstrap-icons/font/bootstrap-icons.css') }}">
 <script src="{{ asset('js/bootstrap.js') }}"></script>
 @extends('layouts.app')
 @section('content')
@@ -21,7 +21,7 @@
                                         <div class="position-relative">
                                             <img id="preview" src="" alt="Preview Image">
                                             <button type="button" class="btn btn-danger btn-sm delete-button" onclick="deleteImage()">
-                                            X
+                                                X
                                             </button>
                                         </div>
                                     </div>
@@ -35,13 +35,23 @@
                         </div>
                     </form>
                 </div>
-                <?php $a = [1, 2, 3] ?>
-                @foreach($a as $b)
-                <div class="show-posts" key={{$b}}>
-                    <h5> Nguyễn Đình Dũng </h5>
-                    <span>13/04/2000</span><br>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam voluptates quam in odit numquam illo? Consectetur, perferendis! Atque esse iusto suscipit tenetur mollitia explicabo officia placeat veritatis. Minus, vel dignissimos?</p>
-                    <img src="" alt="hello">
+                @foreach($posts as $items)
+                <div class="show-posts">
+                    <h5>{{$items->name}}</h5>
+                    <span>{{$items->created_at}}</span><br>
+                    <p>{{$items->content}}</p>
+                    <img src="{{$items->media_url}}" alt="">
+                    <i class="fa-solid fa-bars">
+                        <ul>
+                            <li><a href="">Sửa</a></li>
+                            <li>
+                                <form action="{{route('delete',['id'=>$items->post_id])}}" method="post">
+                                    @csrf
+                                    <button type="submit">Xoá</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </i>
                 </div>
                 @endforeach
             </div>

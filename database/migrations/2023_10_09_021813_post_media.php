@@ -17,7 +17,7 @@ class PostMedia extends Migration
             $table->id();
             $table->unsignedBigInteger('post_id');
             $table->foreign('post_id')->references('id')->on('posts');
-            $table->string('media_url');
+            $table->string('media_url')->nullable();
             $table->string('media_type');
             $table->timestamps();
         });
