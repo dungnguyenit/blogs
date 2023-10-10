@@ -1,4 +1,12 @@
 const mix = require('laravel-mix');
+mix.copy(
+    "node_modules/bootstrap/dist/css/bootstrap.css",
+    "public/css/bootstrap.css"
+);
+mix.copy(
+    "node_modules/bootstrap/dist/js/bootstrap.bundle.js",
+    "public/js/bootstrap.js"
+);
 
 /*
  |--------------------------------------------------------------------------

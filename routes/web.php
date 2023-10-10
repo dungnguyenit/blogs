@@ -22,3 +22,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/create_post', 'PostController@store')->name('create_posts');
+Route::get('/personal_page', function () {
+    return view('personalPage');
+})->name('personal_page');
