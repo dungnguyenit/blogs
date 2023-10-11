@@ -15,8 +15,12 @@ class PostController extends Controller
 {
     public function store(Request $request, Post $post, PostMedia $postMedia)
     {
+
         $userId = Auth::id();
         $params = $request->all();
+        if ($params['title'] == null) {
+            return redirect()->route('home')->with('error', 'Content cannot be empty.');
+        }
         $post = new Post();
         $post->content = $params['title'];
         $post->user_id = $userId;
@@ -33,11 +37,17 @@ class PostController extends Controller
     {
         $user_id = DB::table('posts')->where('id', $id)->value('user_id');
         if ($user_id == Auth::id()) {
-            PostMedia::destroy($id);
-            Post::destroy($id);
-            return redirect()->back()->with('success', 'Bản ghi đã được xóa thành công.');
-        } else {
-            return redirect()->back()->with('error', 'Bạn không có quyền xóa bản ghi này.');
+            // $postId = $id;
+            try {
+                PostMedia::where('post_id', $id)->delete();
+                Post::destroy($id);
+                return redirect()->route('home')->with('success', 'Bài đăng đã được xoá thành công.');
+            } catch (\Exception $e) {
+                return redirect()->route('home')->with('error', 'Đã xảy ra lỗi khi xoá bài đăng.');
+            }
+        }
+        else{
+            return redirect()->route('home')->with('error','Bạn không có quyền xoá');
         }
     }
     public function editPost($id)
@@ -54,24 +64,25 @@ class PostController extends Controller
 
     public function updatePost(Request $request, $id)
     {
+        $user_id = DB::table('posts')->where('id', $id)->value('user_id');
+        if ($user_id == Auth::id()) {
+            $post = Post::findOrFail($id);
+            $post->content = $request->input('title');
+            $post->save();
 
-        $post = Post::findOrFail($id);
-
-        // Cập nhật nội dung bài đăng
-        $post->content = $request->input('title');
-        $post->save();
-
-        if ($request->hasFile('file')) {
-            // Xóa media cũ nếu có
-            if ($post->postMedia) {
-                $postMedia = $post->postMedia;
-                $file = $request->file('file');
-                $path = $file->store('images');  // Lưu ảnh vào thư mục 'images' (hoặc bạn có thể chọn thư mục khác)
-                $postMedia->media_url = $path;
-                $postMedia->save();
+            if ($request->hasFile('file')) {
+                // Xóa media cũ nếu có
+                if ($post->postMedia) {
+                    $postMedia = $post->postMedia;
+                    $file = $request->file('file');
+                    $path = $file->store('images');
+                    $postMedia->media_url = $path;
+                    $postMedia->save();
+                }
             }
+            return redirect()->route('home');
+        } else {
+            return redirect()->route('home');
         }
-
-        return redirect()->route('home');
     }
 }

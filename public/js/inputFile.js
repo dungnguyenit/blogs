@@ -37,3 +37,7 @@ function deleteImage() {
 // ------------------
 var menu = document.querySelector(".menu"); // Using a class instead, see note below.
 menu.classList.toggle("hidden-phone");
+
+
+// -----------------
+

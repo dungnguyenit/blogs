@@ -8,12 +8,17 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="card">
                 <div class="create-posts">
                     <form method="POST" action="{{ route('create_posts') }}">
                         @csrf
                         <div class=" box">
+                            @if(session('error'))
+                            <div class="alert alert-danger" >
+                                {{ session('error') }}
+                            </div>
+                            @endif
                             <textarea name="title" id="" cols="30" rows="10" placeholder="Nhập bài viet"></textarea>
                             <div class="box-content">
                                 <div class="custom-file-upload">
@@ -42,25 +47,11 @@
                     <span>{{$items->created_at}}</span><br>
                     <p>{{$items->content}}</p>
                     <img src="{{$items->media_url}}" alt="">
-                    <i class="fa-solid fa-bars">
-                        <ul>
-                            <li>
-                                <a href="{{route('edit',['id'=>$items->post_id])}}">Sửa</a>
-                            </li>
-                            <li>
-                                <form action="{{route('delete',['id'=>$items->post_id])}}" method="post">
-                                    @csrf
-                                    <button type="submit">Xoá</button>
-                                </form>
-                            </li>
-                        </ul>
-                    </i>
                 </div>
                 @endforeach
             </div>
         </div>
     </div>
 </div>
-
 <script src="{{ asset('js/inputFile.js') }}"></script>
 @endsection

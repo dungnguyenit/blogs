@@ -15,18 +15,18 @@ use App\Http\Controllers\PersonalPageController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', 'HomeController@getPosts');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@getPosts')->name('home');
 Route::post('/home/{id}/delete', 'PostController@deletePosts')->name('delete');
 Route::get('/home/{id}/edit', 'PostController@editPost')->name('edit');
 Route::post('/edit/{id}', 'PostController@updatePost')->name('update');
-Route::post('/create_post', 'PostController@store')->name('create_posts');
+Route::post('/home', 'PostController@store')->name('create_posts');
 Route::get('/personal_page', function () {
     return view('personalPage');
 })->name('personal_page');
