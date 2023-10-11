@@ -40,4 +40,16 @@ class PostController extends Controller
             return redirect()->back()->with('error', 'Bạn không có quyền xóa bản ghi này.');
         }
     }
+    public function editPost($id)
+    {
+        $posts = DB::table('posts')
+            ->join('users', 'users.id', '=', 'posts.user_id')
+            ->join('post_media', 'post_media.post_id', '=', 'posts.id')
+            ->select('users.name', 'posts.content', 'posts.created_at', 'post_media.media_url', 'post_media.post_id')
+            ->where('post_id', '=', $id)
+            ->orderBy('posts.created_at', 'desc')
+            ->get();
+        dd($posts);    
+        return view('edit', ['posts' => $posts]);
+    }
 }

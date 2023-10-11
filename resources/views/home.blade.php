@@ -43,7 +43,12 @@
                     <img src="{{$items->media_url}}" alt="">
                     <i class="fa-solid fa-bars">
                         <ul>
-                            <li><a href="">Sửa</a></li>
+                            <li>
+                                <form action="{{route('edit',['id'=>$items->post_id])}}" method="post">
+                                    @csrf
+                                    <button type="submit">Edit</button>
+                                </form>
+                            </li>
                             <li>
                                 <form action="{{route('delete',['id'=>$items->post_id])}}" method="post">
                                     @csrf

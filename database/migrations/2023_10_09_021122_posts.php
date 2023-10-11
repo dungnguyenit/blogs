@@ -15,7 +15,7 @@ class Posts extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
-            DB::statement("UPDATE posts SET created_at = created_at + INTERVAL 7 HOUR");
+            // DB::statement("UPDATE posts SET created_at = created_at + INTERVAL 7 HOUR");
             $table->id(); // id (primary key)
             $table->unsignedBigInteger('user_id'); // user_id (foreign key referencing the users table)
             $table->foreign('user_id')->references('id')->on('users');

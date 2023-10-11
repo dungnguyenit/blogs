@@ -23,7 +23,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@getPosts')->name('home');
-Route::post('/home/{id}', 'PostController@deletePosts')->name('delete');
+Route::post('/home/{id}/delete', 'PostController@deletePosts')->name('delete');
+Route::post('/home/{id}/edit', 'PostController@editPost')->name('edit');
 Route::post('/create_post', 'PostController@store')->name('create_posts');
 Route::get('/personal_page', function () {
     return view('personalPage');
