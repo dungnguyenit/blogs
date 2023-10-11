@@ -61,7 +61,6 @@ class PostController extends Controller
         $post->content = $request->input('title');
         $post->save();
 
-        // Kiểm tra xem có ảnh mới được tải lên hay không
         if ($request->hasFile('file')) {
             // Xóa media cũ nếu có
             if ($post->postMedia) {
