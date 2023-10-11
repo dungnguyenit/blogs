@@ -49,7 +49,30 @@ class PostController extends Controller
             ->where('post_id', '=', $id)
             ->orderBy('posts.created_at', 'desc')
             ->get();
-        dd($posts);    
         return view('edit', ['posts' => $posts]);
+    }
+
+    public function updatePost(Request $request, $id)
+    {
+
+        $post = Post::findOrFail($id);
+
+        // Cập nhật nội dung bài đăng
+        $post->content = $request->input('title');
+        $post->save();
+
+        // Kiểm tra xem có ảnh mới được tải lên hay không
+        if ($request->hasFile('file')) {
+            // Xóa media cũ nếu có
+            if ($post->postMedia) {
+                $postMedia = $post->postMedia;
+                $file = $request->file('file');
+                $path = $file->store('images');  // Lưu ảnh vào thư mục 'images' (hoặc bạn có thể chọn thư mục khác)
+                $postMedia->media_url = $path;
+                $postMedia->save();
+            }
+        }
+
+        return redirect()->route('home');
     }
 }

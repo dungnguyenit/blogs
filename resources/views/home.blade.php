@@ -5,6 +5,7 @@
 <script src="{{ asset('js/bootstrap.js') }}"></script>
 @extends('layouts.app')
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -12,7 +13,7 @@
                 <div class="create-posts">
                     <form method="POST" action="{{ route('create_posts') }}">
                         @csrf
-                        <div class="box">
+                        <div class=" box">
                             <textarea name="title" id="" cols="30" rows="10" placeholder="Nhập bài viet"></textarea>
                             <div class="box-content">
                                 <div class="custom-file-upload">
@@ -44,10 +45,7 @@
                     <i class="fa-solid fa-bars">
                         <ul>
                             <li>
-                                <form action="{{route('edit',['id'=>$items->post_id])}}" method="post">
-                                    @csrf
-                                    <button type="submit">Edit</button>
-                                </form>
+                                <a href="{{route('edit',['id'=>$items->post_id])}}">Sửa</a>
                             </li>
                             <li>
                                 <form action="{{route('delete',['id'=>$items->post_id])}}" method="post">
