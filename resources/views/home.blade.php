@@ -15,7 +15,7 @@
                         @csrf
                         <div class=" box">
                             @if(session('error'))
-                            <div class="alert alert-danger" >
+                            <div class="alert alert-danger">
                                 {{ session('error') }}
                             </div>
                             @endif
@@ -43,7 +43,7 @@
                 </div>
                 @foreach($posts as $items)
                 <div class="show-posts">
-                    <h5>{{$items->name}}</h5>
+                    <a href="{{route('personal',['id'=>$items->id])}}">{{$items->name}}</a>
                     <span>{{$items->created_at}}</span><br>
                     <p>{{$items->content}}</p>
                     <img src="{{$items->media_url}}" alt="">

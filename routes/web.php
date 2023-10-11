@@ -31,3 +31,4 @@ Route::get('/personal_page', function () {
     return view('personalPage');
 })->name('personal_page');
 Route::get('/personal_page', 'PersonalController@index')->name('personal_page');
+Route::get('/personal_page/{id}', 'PersonalController@index')->name('personal');

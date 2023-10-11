@@ -37,7 +37,7 @@ class HomeController extends Controller
         $posts = DB::table('posts')
             ->join('users', 'users.id', '=', 'posts.user_id')
             ->join('post_media', 'post_media.post_id', '=', 'posts.id')
-            ->select('users.name', 'posts.content', 'posts.created_at', 'post_media.media_url', 'post_media.post_id')
+            ->select('users.name','users.id', 'posts.content', 'posts.created_at', 'post_media.media_url', 'post_media.post_id')
             ->orderBy('posts.created_at', 'desc')
             ->get();
         return view('home', ['posts' => $posts]);
