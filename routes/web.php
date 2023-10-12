@@ -32,3 +32,5 @@ Route::get('/personal_page', function () {
 })->name('personal_page');
 Route::get('/personal_page', 'PersonalController@index')->name('personal_page');
 Route::get('/personal_page/{id}', 'PersonalController@index')->name('personal');
+// routes/web.php
+// Route::post('/upload', 'FileController@upload')->name('uploadFiles');

@@ -8,6 +8,7 @@ use App\PostMedia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 use Illuminate\Support\Facades\DB as FacadesDB;
 
@@ -16,20 +17,36 @@ class PostController extends Controller
     public function store(Request $request, Post $post, PostMedia $postMedia)
     {
 
+
         $userId = Auth::id();
         $params = $request->all();
+
         if ($params['title'] == null) {
             return redirect()->route('home')->with('error', 'Content cannot be empty.');
         }
+
+        // Lưu bài viết
         $post = new Post();
         $post->content = $params['title'];
         $post->user_id = $userId;
         $post->save();
-        $postMedia = new PostMedia();
-        $postMedia->media_url = $params['file'];
-        $postMedia->media_type = config('app.constants.media_types.image');
-        $postMedia->post_id = $post->id;
-        $postMedia->save();
+
+        // Xử lý upload tệp và lưu vào thư mục img
+        if ($request->hasFile('file')) {
+            foreach ($request->file('file') as $file) {
+                $mediaType = $file->getMimeType();
+                $fileName = time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('img'), $fileName);
+
+                // Lưu thông tin về tệp vào cơ sở dữ liệu
+                $postMedia = new PostMedia();
+                $postMedia->media_url = 'img/' . $fileName;
+                $postMedia->media_type = $mediaType;
+                $postMedia->post_id = $post->id;
+                $postMedia->save();
+            }
+        }
+
         return redirect()->route('home');
     }
 
@@ -45,9 +62,8 @@ class PostController extends Controller
             } catch (\Exception $e) {
                 return redirect()->route('home')->with('error', 'Đã xảy ra lỗi khi xoá bài đăng.');
             }
-        }
-        else{
-            return redirect()->route('home')->with('error','Bạn không có quyền xoá');
+        } else {
+            return redirect()->route('home')->with('error', 'Bạn không có quyền xoá');
         }
     }
     public function editPost($id)

@@ -35,11 +35,16 @@ class HomeController extends Controller
     public function getPosts()
     {
         $posts = DB::table('posts')
-            ->join('users', 'users.id', '=', 'posts.user_id')
-            ->join('post_media', 'post_media.post_id', '=', 'posts.id')
-            ->select('users.name','users.id', 'posts.content', 'posts.created_at', 'post_media.media_url', 'post_media.post_id')
+            ->leftJoin('users', 'posts.user_id', '=', 'users.id')
+            ->leftJoin('post_media', 'posts.id', '=', 'post_media.post_id')
+            ->selectRaw('posts.*,users.id as user_id,post_media.id as post_media_id, users.name, post_media.media_url,post_media.post_id')
+            // ->groupBy('post_id')
             ->orderBy('posts.created_at', 'desc')
             ->get();
-        return view('home', ['posts' => $posts]);
+        $result = [];
+        foreach ($posts as $post) {
+            $result[$post->id][] = $post;
+        }
+        return view('home', ['posts' =>$result]);
     }
 }
