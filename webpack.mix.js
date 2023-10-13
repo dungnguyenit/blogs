@@ -1,12 +1,11 @@
-const mix = require('laravel-mix');
-mix.copy(
-    "node_modules/bootstrap/dist/css/bootstrap.css",
-    "public/css/bootstrap.css"
-);
-mix.copy(
-    "node_modules/bootstrap/dist/js/bootstrap.bundle.js",
-    "public/js/bootstrap.js"
-);
+const mix = require("laravel-mix");
+mix.js("resources/js/app.js", "public/js")
+    .js("node_modules/jquery/dist/jquery.min.js", "public/js")
+    .webpackConfig({
+        stats: {
+            modules: false,
+        },
+    });
 
 /*
  |--------------------------------------------------------------------------
@@ -19,5 +18,7 @@ mix.copy(
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.js("resources/js/app.js", "public/js").sass(
+    "resources/sass/app.scss",
+    "public/css"
+);

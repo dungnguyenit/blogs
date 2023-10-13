@@ -563,25 +563,14 @@ a:focus {
 }
 
 .about_section .box .img-box img {
-    width: calc(100% / 3); /* Mỗi ảnh chiếm 1/3 khung */
+    width: calc(100% / 2); /* Mỗi ảnh chiếm 1/3 khung */
     max-width: 100%; /* Kích thước tối đa không vượt quá 100% */
     height: auto; /* Tự điều chỉnh chiều cao để duy trì tỷ lệ khung hình */
-    object-fit: cover; /* Chiều cao bằng nhau, không bị bóp */
+    object-fit: cover;
 }
 
-@media (max-width: 768px) {
-    .image-container img {
-        width: calc(
-            50%
-        ); /* Khi màn hình nhỏ hơn 768px, mỗi ảnh chiếm 50% khung */
-    }
-}
 
-@media (max-width: 480px) {
-    .image-container img {
-        width: 100%; /* Khi màn hình nhỏ hơn 480px, mỗi ảnh chiếm 100% khung */
-    }
-}
+/* ------------------------------- */
 
 .about_section .box .detail-box {
     -webkit-box-flex: 1;

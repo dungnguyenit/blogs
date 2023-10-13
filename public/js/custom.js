@@ -21,7 +21,7 @@ displayYear();
 
 
 // owl carousel slider js
-$('.team_carousel').owlCarousel({
+$('.box-img').owlCarousel({
     loop: true,
     margin: 0,
     dots: true,
