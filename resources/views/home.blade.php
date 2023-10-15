@@ -1,12 +1,3 @@
-<link rel="stylesheet" href="{{asset('css/personalStyle.css')}}">
-<link rel="stylesheet" href="{{asset('css/reponsive.css')}}">
-<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
-<link rel="stylesheet" href="{{ asset('css/style.scss') }}">
-<link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-
-
-
 @extends('layouts.app')
 @section('content')
 
@@ -14,58 +5,85 @@
     <div class="create-posts">
         <form method="POST" action="{{ route('create_posts') }}" enctype="multipart/form-data">
             @csrf
-            <div class=" box-header">
+            <div class="box-header ml-0">
                 <textarea name="title" id="" cols="30" rows="10" placeholder="Nhập bài viết"></textarea>
-                <div class="box-content">
-                    <div class="box-submit">
-                        <!-- <label for="file-upload">Tải lên tệp tin</label> -->
-                        <input type="file" id="file-upload" name="file[]" multiple />
-                        <button type="submit" class="btn-posts">Submit</button>
-                    </div>
+            </div>
+            <div class="box-content mt-2">
+                <div class="box-submit">
+                    <input type="file" id="fileInput" name="uploadFiles[]" multiple style="display: none;" onchange="handleFiles()">
+                    <label for="fileInput" class="btn border m-0">Tải lên tệp tin</label>
+                    <button type="submit" class="btn btn-posts">Submit</button>
                 </div>
             </div>
         </form>
+        <div class="mt-2 text-dark">
+            <span>File đã chọn: <span id="selectedFileCount">0</span></span>
+        </div>
+        <div id="fileList" class="text-dark"></div>
     </div>
-    <div class="container-fluid">
+    <div class="container-fluid pl-0">
         @foreach($posts as $items)
-
-        <div class="box">
-            @if(isset($items[0]->media_url))
-            <div class="img-box">
-                @foreach($items as $p)
-                <img class="dynamic-image" src="{{$p->media_url}}" alt="" />
-                @endforeach
+        <div class="box mb-2">
+            <div class="mr-2">
+                @php
+                $media_url = "img_default/No-image-available.jpg";
+                if (isset($items[0]->media_url)) {
+                $media_url = $items[0]->media_url;
+                }
+                @endphp
+                <img class="dynamic-image" src="{{ $media_url  }}" alt="" style="width: 200px; height: 100%;" />
             </div>
-            @endif
-
-            <div class="detail-box show-post ">
-                <a href="{{route('personal',['id'=>$items[0]->user_id])}}">{{$items[0]->name}}</a>
-                <p>{{$items[0]->created_at}}</p>
-                <p>
+            <div class="detail-box show-post m-0 p-1">
+                <a href="{{route('personal',['id'=>$items[0]->user_id])}}" class="mt-1">Đăng bởi: {{$items[0]->name}}</a>
+                <p class="text-white">{{$items[0]->created_at}}</p>
+                <p class="text-white">
                     {{$items[0]->content}}
                 </p>
                 <div style="display: flex;align-items: flex-end;gap: 10px;">
 
-                    <a href="{{route('edit',['id'=>$items[0]->id])}}">Sửa</a>
+                    <a href="{{route('edit',['id'=>$items[0]->id])}}" class="">Sửa</a>
 
                     <form action="{{route('delete',['id'=>$items[0]->id])}}" method="post" style="margin: 0px;padding: 0px;">
                         @csrf
-                        <button type="submit">Xoá</button>
+                        <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
                     </form>
                 </div>
                 <a href="">
                     <span>
-                        Read More
+                        Read more
                     </span>
-                    <hr />
                 </a>
-
+                @php
+                $totalImgs = count($items);
+                if ($totalImgs > 1) {
+                echo '<a href="javascript:void(0)" class="text-primary show-more-image" data-post-id="'.$items[0]->id.'">Xem thêm ' .($totalImgs - 1) .' hình ảnh</a>';
+                }
+                @endphp
             </div>
         </div>
         @endforeach
     </div>
+    <div id="show-list-images" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-dark" id="exampleModalLabel">Danh sách hình ảnh</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid" id="list-images">
+                        <div class="row">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    {{-- <button type="button" class="btn btn-primary">Send message</button>--}}
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 @endsection
-<script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/custom.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/bootstrap4.js') }}"></script>

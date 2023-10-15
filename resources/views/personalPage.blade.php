@@ -1,16 +1,16 @@
-<!-- <link rel="stylesheet" href="{{asset('css/styles.css')}}"> -->
-<link rel="stylesheet" href="{{asset('css/personalStyle.css')}}">
-<link rel="stylesheet" href="{{asset('css/reponsive.css')}}">
-<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
-<link rel="stylesheet" href="{{ asset('css/style.scss') }}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{{--<link rel="stylesheet" href="{{asset('css/styles.css')}}">--}}
+{{--<link rel="stylesheet" href="{{asset('css/personalStyle.css')}}">--}}
+{{--<link rel="stylesheet" href="{{asset('css/reponsive.css')}}">--}}
+{{--<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">--}}
+{{--<link rel="stylesheet" href="{{ asset('css/style.scss') }}">--}}
+{{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />--}}
 
 
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
 <!-- bootstrap core css -->
-<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+{{--<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />--}}
 <!-- fonts awesome style -->
-<link href="css/font-awesome.min.css" rel="stylesheet" />
+{{--<link href="css/font-awesome.min.css" rel="stylesheet" />--}}
 <!-- fonts style -->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,500,700&display=swap" rel="stylesheet" />
 
@@ -18,7 +18,7 @@
 
 @extends('layouts.app')
 @section('content')
-    <!-- <section class="service_section ">
+<!-- <section class="service_section ">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-6">
@@ -84,63 +84,27 @@
             </div>
         </div>
     </section> -->
-
-<!-- <section class="about_section layout_padding">
-    <div class="container-fluid">
-        @foreach($posts as $items)
-        <div class="box">
-            <div class="img-box">
-                <img src="images/about-img.jpg" alt="" />
-            </div>
-            <div class="detail-box show-post">
-                <h2>{{$items->name}}</h2>
-                <p>{{$items->created_at}}</p>
-                <p>
-                    {{$items->content}}
-                </p>
-
-                <a href="">
-                    <span>
-                        Read More
-                    </span>
-                    <hr />
-                </a>
-                <i class="fa-solid fa-bars">
-                    <ul>
-                        <li>
-                            <a href="{{route('edit',['id'=>$items->post_id])}}">Sửa</a>
-                        </li>
-                        <li>
-                            <form action="{{route('delete',['id'=>$items->post_id])}}" method="post">
-                                @csrf
-                                <button type="submit">Xoá</button>
-                            </form>
-                        </li>
-                    </ul>
-                </i>
-            </div>
-        </div>
-        @endforeach
-    </div>
-</section> -->
 <section class="about_section layout_padding">
     <div class="container-fluid">
         @foreach($posts as $items)
         <div class="box">
-            @if (!empty($items->image_url))
+            @if (count($items->medias) > 0)
             <div class="img-box">
-                <img src="{{$items->image_url}}" alt="" />
+                @foreach($items->medias as $m)
+                <img src="{{$m->media_url}}" alt="" width="150px" height="150px" />
+
+                @endforeach
             </div>
             @endif
-            <div class="detail-box show-post @if (empty($items->image_url)) full-width @endif">
-                <h2>{{$items->name}}</h2>
+            <div class="detail-box show-post m-0 mb-2">
+                <h2>{{$userInfo->name}}</h2>
                 <p>{{$items->created_at}}</p>
                 <p>
                     {{$items->content}}
                 </p>
                 <div style="display: flex;align-items: flex-end;gap: 10px;">
-                    <a href="{{route('edit',['id'=>$items->post_id])}}">Sửa</a>
-                    <form action="{{route('delete',['id'=>$items->post_id])}}" method="post" style="margin: 0px;padding: 0px;">
+                    <a href="{{route('edit',['id'=>$items->id])}}">Sửa</a>
+                    <form action="{{route('delete',['id'=>$items->id])}}" method="post" style="margin: 0px;padding: 0px;">
                         @csrf
                         <button type="submit">Xoá</button>
                     </form>
@@ -401,13 +365,13 @@
 
 <footer class="footer_section container-fluid">
     <p>
-        &copy; <span id="displayYear"></span> All Rights Reserved.  
+        &copy; <span id="displayYear"></span> All Rights Reserved.
     </p>
 </footer>
 
 <script src="{{ asset('js/bootstrap.js') }}"></script>
-<script src="js/jquery-3.4.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-<script src="{{ asset('js/custom.js') }}"></script>
-<script src="{{ asset('js/bootstrap4.js') }}"></script>
+{{--<script src="js/jquery-3.4.1.min.js"></script>--}}
+
+{{--<script src="{{ asset('js/custom.js') }}"></script>--}}
+{{--<script src="{{ asset('js/bootstrap4.js') }}"></script>--}}
 @endsection
