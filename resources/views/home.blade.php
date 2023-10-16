@@ -24,6 +24,7 @@
     <div class="container-fluid pl-0">
         @foreach($posts as $items)
         <div class="box mb-2">
+            @if(isset($items[0]->media_url))
             <div class="mr-2">
                 @php
                 $media_url = "img_default/No-image-available.jpg";
@@ -33,6 +34,7 @@
                 @endphp
                 <img class="dynamic-image" src="{{ $media_url  }}" alt="" style="width: 200px; height: 100%;" />
             </div>
+            @endif
             <div class="detail-box show-post m-0 p-1">
                 <a href="{{route('personal',['id'=>$items[0]->user_id])}}" class="mt-1">Đăng bởi: {{$items[0]->name}}</a>
                 <p class="text-white">{{$items[0]->created_at}}</p>
@@ -74,7 +76,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid" id="list-images">
-                        <div class="row">
+                        <div class="row ">
                         </div>
                     </div>
                 </div>

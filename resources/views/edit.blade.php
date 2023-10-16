@@ -13,7 +13,7 @@
                                 <div class="custom-file-upload">
                                     <div class="row">
                                         @foreach($post->postMedias as $m)
-                                        <div class="col-sm-12 mb-2">
+                                        <div class=" col-md-4 col-sm-12 mb-2">
                                             <img src="{{$m->media_url}}" alt="Preview image" width="450px" height="100%" class="img-fluid border">
                                             <a href="javascript:void(0)" class="btn btn-sm btn-danger delete-post-img" data-post-media-id="{{$m->id}}">Xóa</a>
                                         </div>

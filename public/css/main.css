@@ -91,6 +91,9 @@ input {
 textarea {
     outline: none;
     border: none;
+    height: 150px;
+    outline: 1px solid black;
+    padding: 5px 10px       ;
 }
 
 textarea:focus,
@@ -511,6 +514,11 @@ iframe {
     }
 }
 
-.login100-form-btn{
+.login100-form-btn {
     background-color: #fc00ff;
+}
+
+#fileList {
+    display: flex;
+    gap: 3%;
 }
