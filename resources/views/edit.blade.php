@@ -3,6 +3,17 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            @if($errors->has('msg_update_post'))
+            <div class="alert alert-warning border" id="notification-alert">
+                <button type="button" class="close" data-dismiss="alert">x</button>
+                <strong>
+                    Thông báo:
+                </strong>
+                {{ $errors->first('msg_update_post') }}
+            </div>
+            @endif
+        </div>
+        <div class="col-md-8">
             <div class="card">
                 <div class="create-posts">
                     <form method="POST" action="{{ route('update',['id'=>$post->id]) }}" enctype="multipart/form-data">
