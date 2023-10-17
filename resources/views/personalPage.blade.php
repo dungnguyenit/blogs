@@ -7,7 +7,8 @@
 <section class="about_section layout_padding">
     <div class="container-fluid pl-0">
         @foreach($posts as $items)
-        <div class="box mb-2">
+
+        <div class="box mb-4">
             @if(isset($items[0]->media_url))
             <div class="mr-2">
                 @php
@@ -16,35 +17,34 @@
                 $media_url = $items[0]->media_url;
                 }
                 @endphp
-                <img class="dynamic-image" src="{{ $media_url  }}" alt="" style="width: 200px; height: 100%;" />
+
+                <img class="dynamic-image" src="{{ $media_url  }}" alt="" style="width: 200px; height: -webkit-fill-available;" />
             </div>
             @endif
             <div class="detail-box show-post m-0 p-1">
-                <a href="{{route('personal',['id'=>$items[0]->user_id])}}" class="mt-1">Đăng bởi: {{$items[0]->name}}</a>
-                <p class="text-white">{{$items[0]->created_at}}</p>
-                <p class="text-white">
+                <a href="{{route('personal',['id'=>$items[0]->user_id])}}" class="mt-1 style_name">{{$items[0]->name}}</a>
+                <p class="style_time">{{$items[0]->created_at}}</p>
+                <p class="style_time">
                     {{$items[0]->content}}
                 </p>
-                <div style="display: flex;align-items: flex-end;gap: 10px;">
-
-                    <a href="{{route('edit',['id'=>$items[0]->id])}}" class="">Sửa</a>
-
-                    <form action="{{route('delete',['id'=>$items[0]->id])}}" method="post" style="margin: 0px;padding: 0px;">
-                        @csrf
-                        <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
-                    </form>
+                <div class="layout_btn">
+                    @if($items[0]->user_id == Auth::id())
+                    <div style="display: flex;align-items: flex-end;gap: 10px;">
+                        <a href="{{route('edit',['id'=>$items[0]->id])}}" class="">Sửa</a>
+                        <form action="{{route('delete',['id'=>$items[0]->id])}}" method="post" style="margin: 0px;padding: 0px;">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
+                        </form>
+                    </div>
+                    @endif
+                    @php
+                    $totalImgs = count($items);
+                    if ($totalImgs > 1) {
+                    echo '<a href="javascript:void(0)" class="text-primary show-more-image" data-post-id="'.$items[0]->id.'">Xem thêm ' .($totalImgs - 1) .' hình ảnh</a>';
+                    }
+                    @endphp
                 </div>
-                <a href="">
-                    <span>
-                        Read more
-                    </span>
-                </a>
-                @php
-                $totalImgs = count($items);
-                if ($totalImgs > 1) {
-                echo '<a href="javascript:void(0)" class="text-primary show-more-image" data-post-id="'.$items[0]->id.'">Xem thêm ' .($totalImgs - 1) .' hình ảnh</a>';
-                }
-                @endphp
+
             </div>
         </div>
         @endforeach

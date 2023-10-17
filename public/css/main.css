@@ -93,7 +93,7 @@ textarea {
     border: none;
     height: 150px;
     outline: 1px solid black;
-    padding: 5px 10px       ;
+    padding: 5px 10px;
 }
 
 textarea:focus,
@@ -521,4 +521,10 @@ iframe {
 #fileList {
     display: flex;
     gap: 3%;
+}
+
+.layout_btn {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
 }

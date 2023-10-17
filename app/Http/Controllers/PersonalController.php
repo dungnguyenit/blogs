@@ -26,7 +26,8 @@ class PersonalController extends Controller
         $protocol = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
 
         foreach ($posts as $post) {
-            $post->media_url = $protocol . "://" . $_SERVER['HTTP_HOST'] . "/" . $post->media_url;
+            $media_url = isset($post->media_url) ? $protocol . "://" . $_SERVER['HTTP_HOST'] . "/" . $post->media_url : null;
+            $post->media_url = $media_url;
             $result[$post->id][] = $post;
         }
 

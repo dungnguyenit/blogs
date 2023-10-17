@@ -577,7 +577,7 @@ a:focus {
     flex: 1;
     padding: 25px;
     margin: 25px 0;
-    background-color: #252525;
+    /* background-color: #252525; */
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
