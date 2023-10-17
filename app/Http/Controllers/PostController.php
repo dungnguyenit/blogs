@@ -46,23 +46,29 @@ class PostController extends Controller
             }
         }
 
-        return redirect()->route('home');
+        return redirect(route('home'))->with('msg_create_post', 'Bạn đã tạo mới 1 bài post');
     }
 
     public function deletePosts($id)
     {
+        if (!$this->checkPostIsExist($id)) {
+            return redirect()->back()->withErrors([
+                'msg_delete_post' => 'Bài post này đã bị xóa hoặc không tồn tại'
+            ]);
+        }
+
         $user_id = DB::table('posts')->where('id', $id)->value('user_id');
         if ($user_id == Auth::id()) {
             // $postId = $id;
             try {
                 PostMedia::where('post_id', $id)->delete();
                 Post::destroy($id);
-                return redirect()->route('home')->with('success', 'Bài đăng đã được xoá thành công.');
+                return redirect(route('home'))->with('msg_delete_success', 'Bài đăng đã được xoá thành công.');
             } catch (\Exception $e) {
-                return redirect()->route('home')->with('error', 'Đã xảy ra lỗi khi xoá bài đăng.');
+                return redirect(route('home'))->with('msg_delete_error', 'Đã xảy ra lỗi khi xoá bài đăng.');
             }
         } else {
-            return redirect()->route('home')->with('error', 'Bạn không có quyền xoá');
+            return redirect()->route('home')->with('msg_delete_error', 'Bạn không có quyền xoá');
         }
     }
     public function editPost($id)
@@ -83,6 +89,17 @@ class PostController extends Controller
 
     public function updatePost(Request $request, $id)
     {
+        if (!$this->checkPostIsExist($id)) {
+            return redirect()->back()->withErrors([
+                'msg_update_post' => 'Bài post này đã bị xóa hoặc không tồn tại'
+            ]);
+        }
+
+        //        if (!$this->checkPostIsEdited($id, $request->all())) {
+        //            return redirect()->back()->withErrors([
+        //                'msg_update_post' => 'Bài post này đã được cập nhật trước đó, hãy tải lại trang và thao tác lại !'
+        //            ]);
+        //        }
         $listPostMediaRemoves = $request->input('listPostMediaRemoves');
         $listPostMediaRemoves = rtrim($listPostMediaRemoves, ",");
         if (strlen($listPostMediaRemoves) > 0) {
@@ -130,5 +147,29 @@ class PostController extends Controller
             http_response_code(500);
             echo json_encode($th->getMessage());
         }
+    }
+
+    private function checkPostIsExist($postId)
+    {
+        $post = Post::find($postId);
+        if (is_null($post)) {
+            return false;
+        }
+        return true;
+    }
+
+    private function checkPostIsEdited($postId, $requestData)
+    {
+        $dataWillUpdate = [
+            'title' => $requestData['title']
+        ];
+
+        $postInDb = Post::where('id', $postId)->first()->toArray();
+        $dataWillCheck = [
+            'title' => $postInDb['content']
+        ];
+
+        $areEquals = $dataWillUpdate === $dataWillCheck;
+        return $areEquals;
     }
 }

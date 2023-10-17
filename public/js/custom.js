@@ -88,6 +88,10 @@ $(document).ready(function () {
         list_post_media_ids.val(list_post_media_ids_val);
         $(this).parent().remove();
     });
+
+    $("#notification-alert").fadeTo(5000, 500).slideUp(500, function() {
+        $("#notification-alert").slideUp(3000);
+    });
 });
 
 function handleFiles() {

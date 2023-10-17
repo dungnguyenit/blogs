@@ -1,17 +1,3 @@
-{{--<link rel="stylesheet" href="{{asset('css/styles.css')}}">--}}
-{{--<link rel="stylesheet" href="{{asset('css/personalStyle.css')}}">--}}
-{{--<link rel="stylesheet" href="{{asset('css/reponsive.css')}}">--}}
-{{--<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">--}}
-{{--<link rel="stylesheet" href="{{ asset('css/style.scss') }}">--}}
-{{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />--}}
-
-
-
-<!-- bootstrap core css -->
-{{--<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />--}}
-<!-- fonts awesome style -->
-{{--<link href="css/font-awesome.min.css" rel="stylesheet" />--}}
-<!-- fonts style -->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,500,700&display=swap" rel="stylesheet" />
 
 <!-- bootstrap -->
@@ -19,37 +5,46 @@
 @extends('layouts.app')
 @section('content')
 <section class="about_section layout_padding">
-    <div class="container-fluid">
+    <div class="container-fluid pl-0">
         @foreach($posts as $items)
-        <div class="box">
-            @if (count($items->medias) > 0)
-            <div class="img-box">
-                @foreach($items->medias as $m)
-                <img src="{{$m->media_url}}" alt="" width="150px" height="150px" />
-
-                @endforeach
+        <div class="box mb-2">
+            @if(isset($items[0]->media_url))
+            <div class="mr-2">
+                @php
+                $media_url = "img_default/No-image-available.jpg";
+                if (isset($items[0]->media_url)) {
+                $media_url = $items[0]->media_url;
+                }
+                @endphp
+                <img class="dynamic-image" src="{{ $media_url  }}" alt="" style="width: 200px; height: 100%;" />
             </div>
             @endif
-            <div class="detail-box show-post m-0 mb-2">
-                <h2>{{$userInfo->name}}</h2>
-                <p>{{$items->created_at}}</p>
-                <p>
-                    {{$items->content}}
+            <div class="detail-box show-post m-0 p-1">
+                <a href="{{route('personal',['id'=>$items[0]->user_id])}}" class="mt-1">Đăng bởi: {{$items[0]->name}}</a>
+                <p class="text-white">{{$items[0]->created_at}}</p>
+                <p class="text-white">
+                    {{$items[0]->content}}
                 </p>
                 <div style="display: flex;align-items: flex-end;gap: 10px;">
-                    <a href="{{route('edit',['id'=>$items->id])}}">Sửa</a>
-                    <form action="{{route('delete',['id'=>$items->id])}}" method="post" style="margin: 0px;padding: 0px;">
+
+                    <a href="{{route('edit',['id'=>$items[0]->id])}}" class="">Sửa</a>
+
+                    <form action="{{route('delete',['id'=>$items[0]->id])}}" method="post" style="margin: 0px;padding: 0px;">
                         @csrf
-                        <button type="submit">Xoá</button>
+                        <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
                     </form>
                 </div>
                 <a href="">
                     <span>
-                        Read More
+                        Read more
                     </span>
-                    <hr />
                 </a>
-
+                @php
+                $totalImgs = count($items);
+                if ($totalImgs > 1) {
+                echo '<a href="javascript:void(0)" class="text-primary show-more-image" data-post-id="'.$items[0]->id.'">Xem thêm ' .($totalImgs - 1) .' hình ảnh</a>';
+                }
+                @endphp
             </div>
         </div>
         @endforeach
@@ -136,7 +131,28 @@
         &copy; <span id="displayYear"></span> All Rights Reserved.
     </p>
 </footer>
-
+<div id="show-list-images" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark" id="exampleModalLabel">Danh sách hình ảnh</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid" id="list-images">
+                    <div class="row ">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                {{-- <button type="button" class="btn btn-primary">Send message</button>--}}
+            </div>
+        </div>
+    </div>
+</div>
 <script src="{{ asset('js/bootstrap.js') }}"></script>
 {{--<script src="js/jquery-3.4.1.min.js"></script>--}}
 
