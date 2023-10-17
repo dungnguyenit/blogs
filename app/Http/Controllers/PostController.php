@@ -63,12 +63,12 @@ class PostController extends Controller
             try {
                 PostMedia::where('post_id', $id)->delete();
                 Post::destroy($id);
-                return redirect(route('home'))->with('msg_delete_success', 'Bài đăng đã được xoá thành công.');
+                return redirect(route('personal_page'))->with('msg_delete_success', 'Bài đăng đã được xoá thành công.');
             } catch (\Exception $e) {
-                return redirect(route('home'))->with('msg_delete_error', 'Đã xảy ra lỗi khi xoá bài đăng.');
+                return redirect(route('personal_page'))->with('msg_delete_error', 'Đã xảy ra lỗi khi xoá bài đăng.');
             }
         } else {
-            return redirect()->route('home')->with('msg_delete_error', 'Bạn không có quyền xoá');
+            return redirect()->route('personal_page')->with('msg_delete_error', 'Bạn không có quyền xoá');
         }
     }
     public function editPost($id)
@@ -130,9 +130,9 @@ class PostController extends Controller
                     $postMedia->save();
                 }
             }
-            return redirect()->route('home');
+            return redirect()->route('personal_page');
         } else {
-            return redirect()->route('home');
+            return redirect()->route('personal_page');
         }
     }
 

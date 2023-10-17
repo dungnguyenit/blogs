@@ -69,33 +69,37 @@
         </div>
         @foreach($posts as $items)
         <div class="box mb-4">
-            @if(isset($items[0]->media_url))
-            <div class="mr-2">
-                @php
-                $media_url = "img_default/No-image-available.jpg";
-                if (isset($items[0]->media_url)) {
-                $media_url = $items[0]->media_url;
-                }
-                @endphp
-                <img class="dynamic-image" src="{{ $media_url  }}" alt="" style="width: 200px; height: 100%;" />
-            </div>
-            @endif
-            <div class="detail-box show-post m-0 p-1">
-                <a href="{{route('personal',['id'=>$items[0]->user_id])}}" class="mt-1 style_name">{{$items[0]->name}}</a>
-                <p class=" style_time">{{$items[0]->created_at}}</p>
-                <p class=" style_time">
-                    {{$items[0]->content}}
-                </p>
+            @php
+            $totalWords = str_word_count($items[0]->content);
+            $media_url = "img_default/No-image-available.jpg";
+            if (isset($items[0]->media_url)) {
+            $media_url = $items[0]->media_url;
+            }
+            @endphp
 
-                @php
-                $totalImgs = count($items);
-                if ($totalImgs > 1) {
-                echo '<a href="javascript:void(0)" class="text-primary show-more-image" data-post-id="'.$items[0]->id.'">Xem thêm ' .($totalImgs - 1) .' hình ảnh</a>';
-                }
-                @endphp
-            </div>
+            @if($totalWords <= 200 && isset($items[0]->media_url))
+                <div class="mr-2">
+                    <img class="dynamic-image" src="{{ $media_url }}" alt="" style="width: 200px; height: 100%;" />
+                </div>
+                @endif
+
+                <div class="detail-box show-post m-0 p-1">
+                    <a href="{{ route('personal', ['id' => $items[0]->user_id]) }}" class="mt-1 style_name">{{ $items[0]->name }}</a>
+                    <p class="style_time">{{ $items[0]->created_at }}</p>
+                    <p class="style_time">
+                        {{ $items[0]->content }}
+                    </p>
+
+                    @php
+                    $totalImgs = count($items);
+                    if ($items[0]->media_url) {
+                    echo '<a href="javascript:void(0)" class="text-primary show-more-image" data-post-id="'.$items[0]->id.'">Xem thêm ' .($totalImgs - 0) .' hình ảnh</a>';
+                    }
+                    @endphp
+                </div>
         </div>
         @endforeach
+
     </div>
     <div id="show-list-images" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">

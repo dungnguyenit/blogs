@@ -7,47 +7,46 @@
 <section class="about_section layout_padding">
     <div class="container-fluid pl-0">
         @foreach($posts as $items)
-
         <div class="box mb-4">
-            @if(isset($items[0]->media_url))
-            <div class="mr-2">
-                @php
-                $media_url = "img_default/No-image-available.jpg";
-                if (isset($items[0]->media_url)) {
-                $media_url = $items[0]->media_url;
-                }
-                @endphp
+            @php
+            $totalWords = str_word_count($items[0]->content);
+            $media_url = isset($items[0]->media_url) ? $items[0]->media_url : "img_default/No-image-available.jpg";
+            @endphp
 
-                <img class="dynamic-image" src="{{ $media_url  }}" alt="" style="width: 200px; height: -webkit-fill-available;" />
-            </div>
-            @endif
-            <div class="detail-box show-post m-0 p-1">
-                <a href="{{route('personal',['id'=>$items[0]->user_id])}}" class="mt-1 style_name">{{$items[0]->name}}</a>
-                <p class="style_time">{{$items[0]->created_at}}</p>
-                <p class="style_time">
-                    {{$items[0]->content}}
-                </p>
-                <div class="layout_btn">
-                    @if($items[0]->user_id == Auth::id())
-                    <div style="display: flex;align-items: flex-end;gap: 10px;">
-                        <a href="{{route('edit',['id'=>$items[0]->id])}}" class="">Sửa</a>
-                        <form action="{{route('delete',['id'=>$items[0]->id])}}" method="post" style="margin: 0px;padding: 0px;">
-                            @csrf
-                            <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
-                        </form>
-                    </div>
-                    @endif
-                    @php
-                    $totalImgs = count($items);
-                    if ($totalImgs > 1) {
-                    echo '<a href="javascript:void(0)" class="text-primary show-more-image" data-post-id="'.$items[0]->id.'">Xem thêm ' .($totalImgs - 1) .' hình ảnh</a>';
-                    }
-                    @endphp
+            @if($totalWords <= 200 && isset($items[0]->media_url))
+                <div class="mr-2">
+                    <img class="dynamic-image" src="{{ $media_url }}" alt="" style="width: 200px; height: -webkit-fill-available;" />
                 </div>
+                @endif
 
-            </div>
+                <div class="detail-box show-post m-0 p-1">
+                    <a href="{{ route('personal', ['id' => $items[0]->user_id]) }}" class="mt-1 style_name">{{ $items[0]->name }}</a>
+                    <p class="style_time">{{ $items[0]->created_at }}</p>
+                    <p class="style_time">
+                        {{ $items[0]->content }}
+                    </p>
+                    <div class="layout_btn">
+                        @if($items[0]->user_id == Auth::id())
+                        <div style="display: flex;align-items: flex-end;gap: 10px;">
+                            <a href="{{ route('edit', ['id' => $items[0]->id]) }}" class="">Sửa</a>
+                            <form action="{{ route('delete', ['id' => $items[0]->id]) }}" method="post" style="margin: 0px;padding: 0px;">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-danger">Xoá</button>
+                            </form>
+                        </div>
+                        @endif
+
+                        @php
+                        $totalImgs = count($items);
+                        if ($items[0]->media_url) {
+                        echo '<a href="javascript:void(0)" class="text-primary show-more-image" data-post-id="'.$items[0]->id.'">Xem thêm ' .($totalImgs - 0) .' hình ảnh</a>';
+                        }
+                        @endphp
+                    </div>
+                </div>
         </div>
         @endforeach
+
     </div>
 </section>
 
