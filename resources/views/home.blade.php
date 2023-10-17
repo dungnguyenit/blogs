@@ -22,6 +22,51 @@
         <div id="fileList" class="text-dark"></div>
     </div>
     <div class="container-fluid pl-0">
+        <div class="row">
+            <div class="col-md-12">
+                @if($errors->has('msg_delete_post'))
+                <div class="alert alert-warning border" id="notification-alert">
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                    <strong>
+                        Thông báo:
+                    </strong>
+                    {{ $errors->first('msg_delete_post') }}
+                </div>
+                @elseif(session('msg_update_post'))
+                <div class="alert alert-warning border" id="notification-alert">
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                    <strong>
+                        Thông báo:
+                    </strong>
+                    {{ session('msg_update_post') }}
+                </div>
+                @elseif(session('msg_create_post'))
+                <div class="alert alert-success border" id="notification-alert">
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                    <strong>
+                        Thông báo:
+                    </strong>
+                    {{ session('msg_create_post') }}
+                </div>
+                @elseif(session('msg_delete_success'))
+                <div class="alert alert-success border" id="notification-alert">
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                    <strong>
+                        Thông báo:
+                    </strong>
+                    {{ session('msg_delete_success') }}
+                </div>
+                @elseif(session('msg_delete_error'))
+                <div class="alert alert-danger border" id="notification-alert">
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                    <strong>
+                        Thông báo:
+                    </strong>
+                    {{ session('msg_delete_error') }}
+                </div>
+                @endif
+            </div>
+        </div>
         @foreach($posts as $items)
         <div class="box mb-2">
             @if(isset($items[0]->media_url))

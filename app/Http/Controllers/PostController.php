@@ -74,8 +74,9 @@ class PostController extends Controller
     public function editPost($id)
     {
         $post = DB::table('posts')->select('*')->where('id', $id)->first();
-        $postMedias = [];
-        if (!is_null($post)) {
+        if (is_null($post)) {
+            return redirect()->route('home')->with('msg_update_post', 'Bài đăng này không tồn tại.');
+        } else {
             $postMedias = DB::table('post_media')->select('*')->where('post_id', $post->id)->get();
         }
         $protocol = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
@@ -138,8 +139,13 @@ class PostController extends Controller
     public function getListImages(Request $request)
     {
         try {
+            $protocol = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
+
             $postId = $request->post('postId');
             $postMedias = DB::table('post_media')->select('*')->where('post_id', $postId)->get();
+            foreach ($postMedias as $pm) {
+                $pm->media_url = $protocol . "://" . $_SERVER['HTTP_HOST'] . "/" . $pm->media_url;
+            }
             header("Content-Type: application/json");
             echo json_encode($postMedias);
         } catch (\Throwable $th) {

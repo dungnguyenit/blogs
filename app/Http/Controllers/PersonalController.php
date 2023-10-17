@@ -23,7 +23,10 @@ class PersonalController extends Controller
             ->orderBy('posts.created_at', 'desc')
             ->get();
         $result = [];
+        $protocol = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
+
         foreach ($posts as $post) {
+            $post->media_url = $protocol . "://" . $_SERVER['HTTP_HOST'] . "/" . $post->media_url;
             $result[$post->id][] = $post;
         }
 

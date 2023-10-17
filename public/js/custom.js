@@ -55,7 +55,7 @@ $(document).ready(function () {
         $("#list-images .row").empty();
         $.ajax({
             type: "POST",
-            url: "get-list-images",
+            url: "/get-list-images",
             data: JSON.stringify(requestData),
             contentType: "application/json",
             success: function (response) {
@@ -89,9 +89,11 @@ $(document).ready(function () {
         $(this).parent().remove();
     });
 
-    $("#notification-alert").fadeTo(5000, 500).slideUp(500, function() {
-        $("#notification-alert").slideUp(3000);
-    });
+    $("#notification-alert")
+        .fadeTo(5000, 500)
+        .slideUp(500, function () {
+            $("#notification-alert").slideUp(3000);
+        });
 });
 
 function handleFiles() {
