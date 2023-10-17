@@ -8,13 +8,12 @@
             <form method="POST" action="{{ route('login') }}" class="login100-form validate-form">
                 <div class="login100-form-title p-b-49">{{ __('Login') }}</div>
                 @csrf
-
                 <div class="wrap-input100 validate-input m-b-23">
-                    <label for="email" class="label-input100">{{ __('E-Mail Address') }}</label>
+                    <label for="email" class="label-input100">{{ __('E-Mail/Phone Number') }}</label>
 
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror input100" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                    <input id="username" class="form-control @error('username') is-invalid @enderror input100" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
 
-                    @error('email')
+                    @error('username')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

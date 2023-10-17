@@ -75,7 +75,7 @@ class PostController extends Controller
     {
         $post = DB::table('posts')->select('*')->where('id', $id)->first();
         if (is_null($post)) {
-            return redirect()->route('home')->with('msg_update_post', 'Bài đăng này không tồn tại.');
+            return redirect()->route('personal_page')->with('msg_update_post', 'Bài đăng này không tồn tại.');
         } else {
             $postMedias = DB::table('post_media')->select('*')->where('post_id', $post->id)->get();
         }
