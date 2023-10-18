@@ -8,7 +8,7 @@
             <div class="box-header ml-0">
                 <textarea name="title" id="" cols="30" rows="10" placeholder="Nhập bài viết"></textarea>
             </div>
-            <div class="box-content mt-12 mb-2">
+            <div class="box-content mt-2">
                 <div class="box-submit">
                     <input type="file" id="fileInput" name="uploadFiles[]" multiple style="display: none;" onchange="handleFiles()">
                     <label for="fileInput" class="btn border m-0">Tải lên tệp tin</label>
@@ -77,9 +77,9 @@
             }
             @endphp
 
-            @if($totalWords <= 250 && isset($items[0]->media_url))
+            @if($totalWords <= 200 && isset($items[0]->media_url))
                 <div class="mr-2">
-                    <img class="dynamic-image" src="{{ $media_url }}" alt="" style="width: 200px; height: 180px;" />
+                    <img class="dynamic-image" src="{{ $media_url }}" alt="" style="width: 200px; height: 100%;" />
                 </div>
                 @endif
 
@@ -93,7 +93,7 @@
                     @php
                     $totalImgs = count($items);
                     if ($items[0]->media_url) {
-                    echo '<a href="javascript:void(0)" class="text-primary show-more-image" data-post-id="'.$items[0]->id.'">Xem tất cả hình ảnh (' .($totalImgs - 0) .')</a>';
+                    echo '<a href="javascript:void(0)" class="text-primary show-more-image" data-post-id="'.$items[0]->id.'">Xem thêm ' .($totalImgs - 0) .' hình ảnh</a>';
                     }
                     @endphp
                 </div>
@@ -123,72 +123,6 @@
             </div>
         </div>
     </div>
+
 </section>
-
-<section class="info_section layout_padding2">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="info_contact">
-                    <h5>
-                        Address
-                    </h5>
-                    <div class="contact_link_box">
-                        <a href="">
-                            <i class="fa fa-map-marker" aria-hidden="true"></i>
-                            <span>
-                                Location
-                            </span>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-phone" aria-hidden="true"></i>
-                            <span>
-                                Call +01 1234567890
-                            </span>
-                        </a>
-                        <a href="">
-                            <i class="fa fa-envelope" aria-hidden="true"></i>
-                            <span>
-                                demo@gmail.com
-                            </span>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-            <div class="col-md-4">
-                <div class="info_link_box">
-                    <h5>
-                        Navigation
-                    </h5>
-                    <div class="info_links">
-                        <a class="active" href="index.html"> <i class="fa fa-angle-right" aria-hidden="true"></i> Home <span class="sr-only">(current)</span></a>
-                        <a class="" href="about.html"> <i class="fa fa-angle-right" aria-hidden="true"></i> About</a>
-                        <a class="" href="why.html"> <i class="fa fa-angle-right" aria-hidden="true"></i> Why Us </a>
-                        <a class="" href="team.html"> <i class="fa fa-angle-right" aria-hidden="true"></i> Our Team</a>
-                        <a class="" href="testimonial.html"> <i class="fa fa-angle-right" aria-hidden="true"></i> Testimonial</a>
-                        <a class="" href="contact.html"> <i class="fa fa-angle-right" aria-hidden="true"></i> Contact Us</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <h5>
-                    Newsletter
-                </h5>
-                <form action="">
-                    <input type="text" placeholder="Enter Your email" />
-                    <button type="submit">
-                        Subscribe
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
-
-<footer class="footer_section container-fluid">
-    <p>
-        &copy; <span id="displayYear"></span> All Rights Reserved.
-    </p>
-</footer>
 @endsection

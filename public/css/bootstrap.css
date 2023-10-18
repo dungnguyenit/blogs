@@ -8443,20 +8443,20 @@ button.bg-dark:focus {
   padding: 1.5rem !important;
 }
 
-.pt-4,
+/* .pt-4,
 .py-4 {
   padding-top: 1.5rem;
-}
+} */
 
 .pr-4,
 .px-4 {
   padding-right: 1.5rem ;
 }
 
-.pb-4,
+/* .pb-4,
 .py-4 {
   padding-bottom: 1.5rem ;
-}
+} */
 
 .pl-4,
 .px-4 {

@@ -91,9 +91,10 @@ input {
 textarea {
     outline: none;
     border: none;
-    height: 150px;
-    outline: 1px solid black;
+    height: 200px;
+    outline: 1px solid #b1a3a3;
     padding: 5px 10px;
+    border-radius: 8px;
 }
 
 textarea:focus,

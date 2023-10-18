@@ -56,9 +56,9 @@
             $media_url = isset($items[0]->media_url) ? $items[0]->media_url : "img_default/No-image-available.jpg";
             @endphp
 
-            @if($totalWords <= 200 && isset($items[0]->media_url))
+            @if($totalWords <= 250 && isset($items[0]->media_url))
                 <div class="mr-2">
-                    <img class="dynamic-image" src="{{ $media_url }}" alt="" style="width: 200px; height: -webkit-fill-available;" />
+                    <img class="dynamic-image" src="{{ $media_url }}" alt="" style="width: 200px; height: 180px" />
                 </div>
                 @endif
 
@@ -82,7 +82,7 @@
                         @php
                         $totalImgs = count($items);
                         if ($items[0]->media_url) {
-                        echo '<a href="javascript:void(0)" class="text-primary show-more-image" data-post-id="'.$items[0]->id.'">Xem thêm ' .($totalImgs - 0) .' hình ảnh</a>';
+                        echo '<a href="javascript:void(0)" class="text-primary show-more-image" data-post-id="'.$items[0]->id.'">Xem tất cả hình ảnh (' .($totalImgs - 0) .')</a>';
                         }
                         @endphp
                     </div>
@@ -122,20 +122,6 @@
                             </span>
                         </a>
                     </div>
-                </div>
-                <div class="info_social">
-                    <a href="">
-                        <i class="fa fa-facebook" aria-hidden="true"></i>
-                    </a>
-                    <a href="">
-                        <i class="fa fa-twitter" aria-hidden="true"></i>
-                    </a>
-                    <a href="">
-                        <i class="fa fa-linkedin" aria-hidden="true"></i>
-                    </a>
-                    <a href="">
-                        <i class="fa fa-instagram" aria-hidden="true"></i>
-                    </a>
                 </div>
             </div>
             <div class="col-md-4">

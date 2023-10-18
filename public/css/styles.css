@@ -7,7 +7,7 @@
 .box-header textarea {
     width: 99%;
     height: 100px;
-    outline: 1px solid blueviolet;
+    outline: 1px solid #b1a3a3;
 }
 
 .box-submit button {
@@ -32,4 +32,9 @@
     line-height: 20px;
     text-align: justify;
     padding: 3px 0px ;
+}
+
+.box-content{
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
