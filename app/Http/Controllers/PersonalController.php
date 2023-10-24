@@ -10,10 +10,32 @@ use Illuminate\Support\Facades\DB as FacadesDB;
 class PersonalController extends Controller
 {
 
+    // public function index($id = null)
+    // {
+    //     $userId = $id ? $id : Auth::id();
+    //     $userInfo = DB::table('users')->select('*')->where('id', $userId)->first();
+    //     $posts = DB::table('posts')
+    //         ->leftJoin('users', 'posts.user_id', '=', 'users.id')
+    //         ->leftJoin('post_media', 'posts.id', '=', 'post_media.post_id')
+    //         ->where('posts.user_id', $userId)
+    //         ->selectRaw('posts.*,users.id as user_id,post_media.id as post_media_id, users.name, post_media.media_url,post_media.post_id')
+    //         ->orderBy('posts.created_at', 'desc')
+    //         ->get();
+    //     $result = [];
+    //     $protocol = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
+    //     foreach ($posts as $post) {
+    //         $media_url = isset($post->media_url) ? $protocol . "://" . $_SERVER['HTTP_HOST'] . "/" . $post->media_url : null;
+    //         $post->media_url = $media_url;
+    //         $result[$post->id][] = $post;
+    //     }
+    //     // $data = json_encode($posts);
+    //     // return response()->json($data);
+    //     dd($posts);
+    //     return view('personalPage', ['posts' => $result, 'userInfo' => $userInfo]);
+    // }
     public function index($id = null)
     {
         $userId = $id ? $id : Auth::id();
-
         $userInfo = DB::table('users')->select('*')->where('id', $userId)->first();
         $posts = DB::table('posts')
             ->leftJoin('users', 'posts.user_id', '=', 'users.id')
@@ -24,13 +46,13 @@ class PersonalController extends Controller
             ->get();
         $result = [];
         $protocol = isset($_SERVER["HTTPS"]) ? 'https' : 'http';
-
         foreach ($posts as $post) {
             $media_url = isset($post->media_url) ? $protocol . "://" . $_SERVER['HTTP_HOST'] . "/" . $post->media_url : null;
             $post->media_url = $media_url;
             $result[$post->id][] = $post;
         }
 
-        return view('personalPage', ['posts' => $result, 'userInfo' => $userInfo]);
+        return response()->json(['posts' => $result, 'userInfo' => $userInfo]);
     }
+
 }

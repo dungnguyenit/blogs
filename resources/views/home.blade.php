@@ -40,6 +40,14 @@
                     </strong>
                     {{ session('msg_update_post') }}
                 </div>
+                @elseif(session('error_title'))
+                <div class="alert alert-warning border" id="notification-alert">
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                    <strong>
+                        Thông báo:
+                    </strong>
+                    {{ session('error_title') }}
+                </div>
                 @elseif(session('msg_create_post'))
                 <div class="alert alert-success border" id="notification-alert">
                     <button type="button" class="close" data-dismiss="alert">x</button>

@@ -590,7 +590,7 @@ a:focus {
     align-items: flex-start;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .about_section .box .detail-box p {

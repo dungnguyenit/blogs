@@ -20,7 +20,7 @@ class PostController extends Controller
         $params = $request->all();
 
         if ($params['title'] == null) {
-            return redirect()->route('home')->with('error', 'Content cannot be empty.');
+            return redirect()->route('home')->with('error_title', 'Nội dung không được bỏ trống.');
         }
 
         // Lưu bài viết
@@ -96,16 +96,17 @@ class PostController extends Controller
             ]);
         }
 
-        //        if (!$this->checkPostIsEdited($id, $request->all())) {
-        //            return redirect()->back()->withErrors([
-        //                'msg_update_post' => 'Bài post này đã được cập nhật trước đó, hãy tải lại trang và thao tác lại !'
-        //            ]);
-        //        }
         $listPostMediaRemoves = $request->input('listPostMediaRemoves');
         $listPostMediaRemoves = rtrim($listPostMediaRemoves, ",");
         if (strlen($listPostMediaRemoves) > 0) {
             $listPostMediaRemoves = explode(",", $listPostMediaRemoves);
             DB::table('post_media')->whereIn('id', $listPostMediaRemoves)->delete();
+        }
+
+        if (empty($request->input('title'))) {
+            return redirect()->back()->withErrors([
+                'msg_update_post' => 'Nội dung không được để trống'
+            ]);
         }
 
         $user_id = DB::table('posts')->where('id', $id)->value('user_id');

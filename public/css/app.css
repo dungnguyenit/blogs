@@ -8448,7 +8448,7 @@ button.bg-dark:focus {
 
 .mt-1,
 .my-1 {
-  margin-top: 0.25rem !important;
+  margin-top: -12px !important;
 }
 
 .mr-1,
